@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <link rel="stylesheet" href="./assets/css/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+
+    <header id="mainHeader">
+    </header>
+
+    <main>
+        <form id="taskForm" action="">
+            <div>
+                <label for="title">Nombre Actividad</label>
+                <input type="text" name="title" id="title" maxlength="255" required autofocus>
+            </div>
+            <div>
+                <label for="description">Descripción</label>
+                <textarea name="description" id="description" rows="10" required></textarea>
+            </div>
+            <div>
+                <label for="assigned_to">Asignado a</label>
+                <input type="text" name="assigned_to" id="assignedTo"></div>
+            <div>
+                <label for="datetime">Fecha final</label>
+                <input name="datetime" id="endDate" type="datetime-local"  />
+            </div>
+            <div>
+                <label for="category">Tipo de tarea</label>
+                <select name="category" id="category" required>
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="0">Bug</option>
+                    <option value="1">Nueva funcionalidad</option>
+                    <option value="2">Documentación</option>
+                </select>
+            </div>
+            <div class="button-div">
+                <button class="save" id="save" type="submit">Guardar Tarea</button>
+                <button class="clear" id="clear" type="submit">Limpiar</button>
+            </div>
+
+        </form>
+
+        <section>
+            <h2>Tasks List</h2>
+            <div id="taskContainer">
+
+                <section id="toDo">
+                    <h3>ToDo</h3>
+                </section>
+                
+                <section id="doing">
+                    <h3>Doing</h3>
+                </section>
+                
+                <section id="done">
+                    <h3>Done</h3>
+                </section>
+                
+            </div>
+        </section>
+    </main>
+
+    <footer>
+
+
+    </footer>
+    
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>

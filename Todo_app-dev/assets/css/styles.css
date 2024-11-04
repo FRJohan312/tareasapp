@@ -1,0 +1,227 @@
+*{
+    font-family: Geneva;
+    box-sizing: border-box;
+}
+
+body{
+    font-size: 18pt;
+    min-width: 360px;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1800px;
+}
+
+main{
+    margin: 24px ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div#taskContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+div#taskContainer section{
+    border: 1px solid red;
+    padding: 12px;
+    width: 550px;
+}
+
+form{
+    margin-bottom: 24px;
+}
+
+label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+input{
+    display: block;
+    font-size: 14pt;
+    height: 30px;
+    margin-bottom: 24px;
+}
+
+textarea{
+    display: block;
+    margin-bottom: 24px;
+}
+
+select{
+  font-size: 14pt;
+  height: 42px;
+  margin-bottom: 24px;
+}
+
+.button-div button{
+    display: block;
+    font-size: 14pt;
+    height: 36px;
+    margin-bottom: 12px;
+    width: 100%;
+}
+
+select, input, textarea{
+    border: 1px dotted rgb(160, 160, 160);
+    padding: 6px;
+}
+
+select, input, textarea, button{
+    border-radius: 5px;
+    font-size: 12pt;
+    width: 100%;
+}
+
+.save{
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.save:hover{
+    border: 1px solid green;
+    background-color: white;
+    color: green;
+}
+
+.edit{
+    background-color: rgb(12, 111, 232);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.edit:hover{
+    border: 1px solid rgb(12, 111, 232);
+    background-color: white;
+    color: rgb(12, 111, 232);
+}
+
+.clear{
+
+    border: 1px solid rgb(11, 173, 238);
+    background-color: white;
+    color: rgb(11, 173, 238);
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.clear:hover{
+    background-color: rgb(11, 173, 238);
+    border: none;
+    color: white;
+    
+}
+
+article{
+    border: 1px solid rgb(54, 150, 224);
+    margin-bottom: 24px;
+    padding: 24px 36px;
+    width: 500px;
+    font-size: 12pt;
+}
+
+span.active{
+    background-color: #198754;
+    border: 1px solid #198754;
+    border-radius: 50rem;
+    color: white;
+    display: flex;
+    font-size: 10pt;
+    height: 20px;
+    width: 70px;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.task-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.news-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.news-container  a{
+    color: white;
+    display: block;
+    font-weight: bold;
+    text-align: end;
+}
+
+article button.actions.delete{
+    background-color: red;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 12px;
+    padding: 6px;
+}
+
+article button.actions.edit{
+    background-color: rgb(11, 173, 238);
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 12px;
+    padding: 6px;
+}
+
+article button.actions.delete:hover{
+    background-color: white;
+    border: 1px solid red;
+    color: red;
+}
+article button.actions.edit:hover{
+    background-color: white;
+    border: 1px solid rgb(11, 173, 238);
+    color: rgb(11, 173, 238);
+}
+
+ /* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+
+
+ }
+
+ /* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+
+    body{
+        /* font-size: 2rem; */
+    }
+ }
+
+ /* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+
+
+    .button-div button{
+        display: inline-block;
+        width: 200px;
+    }
+ }
+
+ /* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+
+ }
+
+ /* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) { 
+
+ }
