@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToDo App</title>
+    <title>App Tareas</title>
     <link rel="stylesheet" href="./assets/css/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
 
-    <header id="mainHeader">
-    </header>
+    <header id="mainHeader"></header>
 
     <main>
         <form id="taskForm" action="">
@@ -28,7 +27,7 @@
                 <input type="text" name="assigned_to" id="assignedTo"></div>
             <div>
                 <label for="datetime">Fecha final</label>
-                <input name="datetime" id="endDate" type="datetime-local"  />
+                <input name="datetime" id="endDate" type="datetime-local" />
             </div>
             <div>
                 <label for="category">Tipo de tarea</label>
@@ -43,33 +42,25 @@
                 <button class="save" id="save" type="submit">Guardar Tarea</button>
                 <button class="clear" id="clear" type="submit">Limpiar</button>
             </div>
-
         </form>
 
         <section>
-            <h2>Tasks List</h2>
+            <h2>Lista de tareas</h2>
             <div id="taskContainer">
-
                 <section id="toDo">
-                    <h3>ToDo</h3>
+                    <h3>Asignado</h3>
                 </section>
-                
                 <section id="doing">
-                    <h3>Doing</h3>
+                    <h3>Haciendo</h3>
                 </section>
-                
                 <section id="done">
-                    <h3>Done</h3>
+                    <h3>Finalizado</h3>
                 </section>
-                
             </div>
         </section>
     </main>
 
-    <footer>
-
-
-    </footer>
+    <footer></footer>
     
     <script src="./assets/js/app.js"></script>
 </body>
