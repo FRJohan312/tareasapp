@@ -1,69 +1,71 @@
-const setInitialDate = (id) => {
-    const endDate = document.querySelector(`#${id}`);
-    const now = new Date();
-    const nowString = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}T${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-    endDate.value = nowString;
-};
-
-const singleTask = (task) => {
-    let moveButtonText = task.status === "active" ? "Hacer" : task.status === "in-progress" ? "Finalizar" : "";
-    return (`<article id=${task.id}>
-        <div class="task-header">
-            <span>${task.id}</span>
-            <span class="${task.status}">${task.status}</span>
-        </div>
-        <h3>${task.title}</h3>
-        <p>${task.description}</p>
-        <div class="task-header">
-            <span>${task.category_description}</span>
-            <span>${task.endDate.slice(0, 16).split("T")[0]} - ${task.endDate.slice(0, 16).split("T")[1]}</span>
-        </div>
-        <button class="actions delete" type="button" name="delete"><i class="fa-solid fa-trash"></i>Eliminar</button>
-        <button class="actions edit" type="button" name="edit"><i class="fa-solid fa-edit"></i>Editar</button>
-        ${moveButtonText ? `<button class="actions move" type="button" name="move">${moveButtonText}</button>` : ""}
-    </article>`);
-};
-
-const printFromLocalStorage = (storageTasks) => {
-    const tasks = JSON.parse(localStorage.getItem(storageTasks));
-    if (tasks) {
-        tasks.forEach(task => {
-            const taskContainer = document.querySelector('#' + (task.status === "active" ? "toDo" : task.status === "in-progress" ? "doing" : "done"));
-            taskContainer.innerHTML += singleTask(task);
-        });
-    } else {
-        console.log("No tasks in local storage");
-    }
-};
-
-const printFromSave = (task, replace = false) => {
-    const section = task.status === "active" ? "toDo" : task.status === "in-progress" ? "doing" : "done";
-    const taskContainer = document.querySelector('#' + section);
-    if (replace) {
-        const existingTask = document.getElementById(task.id);
-        if (existingTask) {
-            existingTask.outerHTML = singleTask(task);
-        }
-    } else {
-        taskContainer.innerHTML += singleTask(task);
-    }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
-    printFromLocalStorage('taskList');
+    const printFromLocalStorage = (key) => {
+        const storedTasks = JSON.parse(localStorage.getItem(key)) || [];
+        storedTasks.forEach(task => {
+            printFromSave(task);
+        });
+    };
+
+    const printFromSave = (task) => {
+        const section = getTaskSection(task.status);
+        const taskContainer = document.querySelector('#' + section);
+        taskContainer.insertAdjacentHTML('beforeend', singleTask(task));
+    };
+
+    const singleTask = (task) => {
+        return `
+            <article id="${task.id}" class="task">
+                <h4>${task.title}</h4>
+                <p>${task.description}</p>
+                <p><strong>Asignado a:</strong> ${task.assigned_to}</p>
+                <p><strong>Fecha:</strong> ${task.endDate}</p>
+                <p><strong>Categoría:</strong> ${task.category_description}</p>
+                <div class="task-actions">
+                    ${task.status !== 'deleted' ? `
+                        <button name="edit" class="edit">Editar</button>
+                        <button name="move" class="move">Mover</button>
+                        <button name="delete" class="delete">Eliminar</button>
+                    ` : `
+                        <button name="restore" class="restore">Restaurar</button>
+                        <button name="deletePermanent" class="deletePermanent">Eliminar Permanente</button>
+                    `}
+                </div>
+            </article>
+        `;
+    };
+    
+
+    const getTaskSection = (status) => {
+        if (status === "active") return "toDo";
+        if (status === "in-progress") return "doing";
+        if (status === "done") return "done";
+        if (status === "deleted") return "trash";
+    };
+
+    const setInitialDate = (elementId) => {
+        const now = new Date();
+        const formattedDate = now.toISOString().slice(0, 16);
+        document.getElementById(elementId).value = formattedDate;
+    };
+
     setInitialDate('endDate');
 
     const taskForm = document.querySelector('#taskForm');
     let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+    let editingTaskId = null;
+
+    printFromLocalStorage('taskList');
 
     taskForm.addEventListener('submit', event => {
         event.preventDefault();
         if (event.submitter.id === "clear") {
             taskForm.reset();
             setInitialDate('endDate');
+            editingTaskId = null;
+            document.getElementById('save').textContent = 'Guardar Tarea';
         } else if (event.submitter.id === "save") {
             const task = {
-                id: Math.random().toString(16).slice(2),
+                id: editingTaskId || Math.random().toString(16).slice(2),
                 title: event.target.title.value,
                 description: event.target.description.value,
                 assigned_to: event.target.assignedTo.value,
@@ -73,10 +75,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 status: "active"
             };
 
-            taskList.push(task);
-            localStorage.setItem('taskList', JSON.stringify(taskList));
+            if (editingTaskId) {
+                const taskIndex = taskList.findIndex(t => t.id === editingTaskId);
+                taskList[taskIndex] = task;
+                localStorage.setItem('taskList', JSON.stringify(taskList));
 
-            printFromSave(task);
+                const taskElement = document.getElementById(editingTaskId);
+                if (taskElement) {
+                    taskElement.outerHTML = singleTask(task);
+                }
+
+                editingTaskId = null;
+                document.getElementById('save').textContent = 'Guardar Tarea';
+            } else {
+                taskList.push(task);
+                localStorage.setItem('taskList', JSON.stringify(taskList));
+
+                printFromSave(task);
+            }
+
             taskForm.reset();
             setInitialDate('endDate');
         }
@@ -108,59 +125,61 @@ document.addEventListener('DOMContentLoaded', () => {
             const task = taskList.find(t => t.id === taskId);
 
             if (event.target.name === 'delete') {
-                taskElement.remove();
-                taskList = taskList.filter(t => t.id !== taskId);
+                task.status = 'deleted';
+                const taskIndex = taskList.findIndex(t => t.id === taskId);
+                taskList[taskIndex] = task;
                 localStorage.setItem('taskList', JSON.stringify(taskList));
-            }
 
-            if (event.target.name === 'edit') {
-                const editForm = document.querySelector('#taskForm');
-                editForm.title.value = task.title;
-                editForm.description.value = task.description;
-                editForm.assignedTo.value = task.assigned_to;
-                editForm.endDate.value = task.endDate;
-                editForm.category.value = task.category;
-
-                const saveButton = document.querySelector('#save');
-                saveButton.id = "edit";
-                saveButton.innerHTML = "Editar";
-                saveButton.classList.replace('save', 'edit');
-
-                saveButton.addEventListener('click', e => {
-                    e.preventDefault();
-                    const updatedTask = {
-                        ...task,
-                        title: editForm.title.value,
-                        description: editForm.description.value,
-                        assigned_to: editForm.assignedTo.value,
-                        endDate: editForm.endDate.value,
-                        category: editForm.category.value,
-                        category_description: editForm.category.options[editForm.category.selectedIndex].text
-                    };
-
-                    const taskIndex = taskList.findIndex(t => t.id === taskId);
-                    taskList[taskIndex] = updatedTask;
-                    localStorage.setItem('taskList', JSON.stringify(taskList));
-
-                    printFromSave(updatedTask, true);
-                    saveButton.id = "save";
-                    saveButton.innerHTML = "Guardar Tarea";
-                    saveButton.classList.replace('edit', 'save');
-
-                    editForm.reset();
-                    setInitialDate('endDate');
-                });
+                taskElement.remove();
+                printFromSave(task);
             }
 
             if (event.target.name === 'move') {
                 moveTask(task);
             }
+
+            if (event.target.name === 'deletePermanent') {
+                const taskIndex = taskList.findIndex(t => t.id === taskId);
+                if (taskIndex !== -1) {
+                    taskList.splice(taskIndex, 1);
+                    localStorage.setItem('taskList', JSON.stringify(taskList));
+
+                    taskElement.remove();
+                }
+            }
+
+            if (event.target.name === 'restore') {
+                task.status = 'active';
+                const taskIndex = taskList.findIndex(t => t.id === taskId);
+                if (taskIndex !== -1) {
+                    taskList[taskIndex] = task;
+                    localStorage.setItem('taskList', JSON.stringify(taskList));
+
+                    taskElement.remove();
+                    printFromSave(task);
+                }
+            }
+
+            if (event.target.name === 'edit') {
+                document.getElementById('title').value = task.title;
+                document.getElementById('description').value = task.description;
+                document.getElementById('assignedTo').value = task.assigned_to;
+                document.getElementById('endDate').value = task.endDate;
+                document.getElementById('category').value = task.category;
+
+                editingTaskId = task.id;
+                document.getElementById('save').textContent = 'Actualizar Tarea';
+            }
         });
     };
 
-    handleTaskClick(document.querySelector('#toDo'));
-    handleTaskClick(document.querySelector('#doing'));
-    handleTaskClick(document.querySelector('#done'));
+    handleTaskClick(document.querySelector('#taskContainer'));
+
+
+    
 });
 
-
+function toggleTrash() {
+    const trashSection = document.getElementById("trash");
+    trashSection.style.display = trashSection.style.display === "none" ? "block" : "none";
+}
