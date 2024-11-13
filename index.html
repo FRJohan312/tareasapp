@@ -10,9 +10,12 @@
 </head>
 <body>
 
-    <header id="mainHeader"></header>
+    <header id="mainHeader">
+        <!-- Aquí puedes agregar el título o encabezado de tu app -->
+    </header>
 
     <main>
+
         <form id="taskForm" action="">
             <div>
                 <label for="title">Nombre Actividad</label>
@@ -24,7 +27,8 @@
             </div>
             <div>
                 <label for="assigned_to">Asignado a</label>
-                <input type="text" name="assigned_to" id="assignedTo"></div>
+                <input type="text" name="assigned_to" id="assignedTo">
+            </div>
             <div>
                 <label for="datetime">Fecha final</label>
                 <input name="datetime" id="endDate" type="datetime-local" />
@@ -40,7 +44,7 @@
             </div>
             <div class="button-div">
                 <button class="save" id="save" type="submit">Guardar Tarea</button>
-                <button class="clear" id="clear" type="submit">Limpiar</button>
+                <button class="clear" id="clear" type="reset">Limpiar</button>
             </div>
         </form>
 
@@ -56,8 +60,20 @@
                 <section id="done">
                     <h3>Finalizado</h3>
                 </section>
+                
+                <!-- Icono de papelera -->
+                <div id="trashIcon" onclick="toggleTrash()">
+                    <i class="fa fa-trash"></i>
+                </div>
+                
+                <!-- Tareas en la papelera, ocultas inicialmente -->
+                <section id="trash" style="display: none;">
+                    <h3>Papelera</h3>
+                    <!-- Aquí se agregarán las tareas eliminadas -->
+                </section>
             </div>
         </section>
+
     </main>
 
     <footer></footer>
