@@ -239,20 +239,63 @@ section:hover {
 }
 
 /* Media queries para dispositivos pequeños */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .mainContainer, .taskSection, form, .task {
+    form, section {
         width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
+        margin-bottom: 20px;
     }
-    section {
-        flex: 1 1 100%;
+
+    .task {
+        padding: 12px;
     }
-    button {
-        width: 100%;
-        margin-top: 10px;
+
+    h1, h2 {
+        font-size: 1.5rem;
+    }
+
+    .task-actions select,
+    .task-actions button {
+        font-size: 0.85rem;
     }
 }
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    form, section {
+        padding: 20px;
+    }
+
+    .button-div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+#createCategoryBtn {
+    background-color: #4CAF50; /* Color verde suave */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 70x;
+    margin-left: 50px;
+}
+
+#createCategoryBtn:hover {
+    background-color: #45a049; /* Color verde más oscuro al hacer hover */
+    transform: scale(1.1); /* Ligero aumento de tamaño al hacer hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
 
 
 /* Estilos del icono de papelera */
