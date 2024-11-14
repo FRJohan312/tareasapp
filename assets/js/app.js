@@ -8,9 +8,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteCategoryBtn = document.getElementById('deleteCategoryBtn');
     const categoryToDeleteSelect = document.getElementById('categoryToDelete');
     const taskForm = document.getElementById('taskForm');
+    const trashButton = document.getElementById('trashButton');
+    const trashContainer = document.getElementById('trashContainer');
+    const deletedTasksContainer = document.getElementById('deletedTasksContainer');
+    
     let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
     let categories = JSON.parse(localStorage.getItem('categories')) || [];
     let editingTaskId = null;
+
+    // Mostrar/Ocultar Papelera
+    trashButton.addEventListener('click', () => {
+        trashContainer.style.display = trashContainer.style.display === 'none' ? 'block' : 'none';
+        loadDeletedTasks();
+    });
+
+    const loadDeletedTasks = () => {
+        deletedTasksContainer.innerHTML = '';
+        taskList.filter(task => task.status === 'deleted').forEach(task => {
+            deletedTasksContainer.insertAdjacentHTML('beforeend', singleDeletedTask(task));
+        });
+    };
+
+    const singleDeletedTask = (task) => `
+        <article id="${task.id}" class="task deleted-task">
+            <h4>${task.title}</h4>
+            <p>${task.description}</p>
+            <p><strong>Asignado a:</strong> ${task.assigned_to}</p>
+            <p><strong>Fecha:</strong> ${task.endDate}</p>
+            <p><strong>Categoría:</strong> ${task.category_description}</p>
+            <div class="task-actions">
+                <button name="restore" class="restore">Restaurar Tarea</button>
+                <button name="deletePermanent" class="deletePermanent">Eliminar Permanentemente</button>
+            </div>
+        </article>
+    `;
 
     const setInitialDate = (elementId) => {
         const now = new Date();
@@ -22,11 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadCategories = () => {
         categories.forEach(category => addCategoryToUI(category));
-        toggleDeleteCategoryElements(); // Para habilitar/deshabilitar el select de eliminar categorías
+        toggleDeleteCategoryElements();
     };
 
     const printFromLocalStorage = () => {
-        taskList.forEach(task => printFromSave(task));
+        taskList.forEach(task => {
+            if (task.status !== 'deleted') {
+                printFromSave(task);
+            }
+        });
     };
 
     const printFromSave = (task) => {
@@ -43,18 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>Fecha:</strong> ${task.endDate}</p>
             <p><strong>Categoría:</strong> ${task.category_description}</p>
             <div class="task-actions">
-                ${task.status !== 'deleted' ? `
-                    <select name="move" class="move-dropdown">
-                        ${categories.map(cat => `
-                            <option value="${cat}" ${cat === task.category_description ? "selected" : ""}>${cat}</option>
-                        `).join('')}
-                    </select>
-                    <button name="edit" class="edit">Editar</button>
-                    <button name="delete" class="delete">Eliminar</button>
-                ` : `
-                    <button name="restore" class="restore">Restaurar</button>
-                    <button name="deletePermanent" class="deletePermanent">Eliminar Permanente</button>
-                `}
+                <select name="move" class="move-dropdown">
+                    ${categories.map(cat => `
+                        <option value="${cat}" ${cat === task.category_description ? "selected" : ""}>${cat}</option>
+                    `).join('')}
+                </select>
+                <button name="edit" class="edit">Editar</button>
+                <button name="delete" class="delete">Eliminar</button>
             </div>
         </article>
     `;
@@ -79,24 +109,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Función de eliminar categoría y tareas relacionadas
     deleteCategoryBtn.addEventListener('click', () => {
         const categoryToDelete = categoryToDeleteSelect.value;
         if (categoryToDelete && categories.includes(categoryToDelete)) {
-            // Eliminar la categoría de la lista de categorías
             categories = categories.filter(category => category !== categoryToDelete);
             localStorage.setItem('categories', JSON.stringify(categories));
 
-            // Eliminar las tareas asociadas a la categoría del localStorage
             taskList = taskList.filter(task => task.category_description !== categoryToDelete);
             localStorage.setItem('taskList', JSON.stringify(taskList));
 
-            // Remover el bloque de la categoría en la interfaz
             const categoryBlock = document.querySelector(`.category-block[data-category="${categoryToDelete}"]`);
             if (categoryBlock) {
                 categoryBlock.remove();
             }
 
-            // Remover la opción de la categoría eliminada del dropdown de categorías
             const categoryOption = document.querySelector(`#categoryToDelete option[value="${categoryToDelete}"]`);
             if (categoryOption) {
                 categoryOption.remove();
@@ -107,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 taskCategoryOption.remove();
             }
 
-            // Actualizar la visibilidad de los elementos relacionados a la eliminación de categoría
             toggleDeleteCategoryElements();
             checkAndHideEmptyCategoryBlocks();
 
@@ -186,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     handleTaskClick(document.querySelector('#categoryBlocksContainer'));
+    handleTrashClick();
 
     function handleTaskClick(container) {
         container.addEventListener('change', event => {
@@ -223,11 +250,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.target.name === 'edit') {
                 populateTaskForm(task);
             }
+        });
+    }
+
+    function handleTrashClick() {
+        deletedTasksContainer.addEventListener('click', event => {
+            const taskElement = event.target.closest('article');
+            const taskId = taskElement?.id;
+            if (!taskId) return;
+
+            const task = taskList.find(t => t.id === taskId);
 
             if (event.target.name === 'restore') {
                 task.status = 'active';
                 updateTaskList(task);
+                taskElement.remove();
                 printFromSave(task);
+                checkAndHideEmptyCategoryBlocks();
             }
 
             if (event.target.name === 'deletePermanent') {
