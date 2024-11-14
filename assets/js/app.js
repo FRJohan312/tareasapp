@@ -183,3 +183,42 @@ function toggleTrash() {
     const trashSection = document.getElementById("trash");
     trashSection.style.display = trashSection.style.display === "none" ? "block" : "none";
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const createCategoryBtn = document.getElementById('createCategoryBtn');
+    const newCategoryForm = document.getElementById('newCategoryForm');
+    const saveCategoryBtn = document.getElementById('saveCategoryBtn');
+    const cancelCategoryBtn = document.getElementById('cancelCategoryBtn');
+    const categorySelect = document.getElementById('category');
+
+    // Mostrar el formulario de creación de categoría cuando el usuario hace clic en el botón
+    createCategoryBtn.addEventListener('click', () => {
+        newCategoryForm.style.display = 'block'; // Mostrar formulario
+    });
+
+    // Cancelar y ocultar el formulario de creación de categoría
+    cancelCategoryBtn.addEventListener('click', () => {
+        newCategoryForm.style.display = 'none'; // Ocultar formulario
+    });
+
+    // Guardar la nueva categoría y agregarla al <select>
+    saveCategoryBtn.addEventListener('click', () => {
+        const newCategoryName = document.getElementById('newCategoryName').value.trim();
+
+        if (newCategoryName) {
+            // Crear la nueva opción para el select
+            const newOption = document.createElement('option');
+            newOption.value = newCategoryName;
+            newOption.textContent = newCategoryName;
+
+            // Añadir la nueva opción al <select>
+            categorySelect.appendChild(newOption);
+
+            // Limpiar el input y ocultar el formulario
+            document.getElementById('newCategoryName').value = '';
+            newCategoryForm.style.display = 'none';
+        } else {
+            alert("Por favor, ingresa un nombre válido para la categoría.");
+        }
+    });
+});
