@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,20 +10,22 @@
 </head>
 <body>
 
+    <!-- Encabezado de la App -->
     <header id="mainHeader">
-        <!-- Aquí puedes agregar el título o encabezado de tu app -->
+        <h1>Gestor de Tareas</h1>
     </header>
 
     <main class="mainContainer">
 
-        <form id="taskForm" action="">
+        <!-- Formulario de Tarea -->
+        <form id="taskForm">
             <div>
                 <label for="title">Nombre Actividad</label>
-                <input type="text" name="title" id="title" maxlength="255" required autofocus>
+                <input type="text" name="title" id="taskTitle" maxlength="255" required autofocus>
             </div>
             <div>
                 <label for="description">Descripción</label>
-                <textarea name="description" id="description" rows="10" required></textarea>
+                <textarea name="description" id="description" rows="5" required></textarea>
             </div>
             <div>
                 <label for="assigned_to">Asignado a</label>
@@ -48,16 +50,17 @@
             </div>
         </form>
 
+        <!-- Contenedor de Tareas -->
         <section class="taskSection">
             <h2>Lista de tareas</h2>
             <div id="taskContainer">
                 <section id="toDo">
                     <h3>Asignado</h3>
                 </section>
-                <section id="doing">
+                <section id="inProgress">
                     <h3>Haciendo</h3>
                 </section>
-                <section id="done">
+                <section id="completed">
                     <h3>Finalizado</h3>
                 </section>
                 
@@ -71,27 +74,26 @@
                     <h3>Papelera</h3>
                     <!-- Aquí se agregarán las tareas eliminadas -->
                 </section>
-            <div id="categoryBlocksContainer">
-    <!-- Aquí se mostrarán los bloques de categorías dinámicamente -->
-</div>
+                
+                <!-- Contenedor de Categorías Dinámicas -->
+                <div id="categoryBlocksContainer">
+                    <!-- Aquí se mostrarán los bloques de categorías dinámicamente -->
+                </div>
 
-<div>
-    <button type="button" id="createCategoryBtn">Crear nueva categoría</button>
-</div>
+                <!-- Botón para Crear Nueva Categoría -->
+                <div>
+                    <button type="button" id="createCategoryBtn">Crear nueva categoría</button>
+                </div>
 
-<!-- Formulario para ingresar nueva categoría -->
-<div id="newCategoryForm" style="display: none;">
-    <label for="newCategoryName">Nombre de la nueva categoría:</label>
-    <input type="text" id="newCategoryName" placeholder="Escribe el nombre de la categoría">
-    <button type="button" id="saveCategoryBtn">Guardar categoría</button>
-    <button type="button" id="cancelCategoryBtn">Cancelar</button>
-</div>
-
-
-            
-
+                <!-- Formulario para Ingresar Nueva Categoría -->
+                <div id="newCategoryForm" style="display: none;">
+                    <label for="newCategoryName">Nombre de la nueva categoría:</label>
+                    <input type="text" id="newCategoryInput" placeholder="Escribe el nombre de la categoría">
+                    <button type="button" id="saveCategoryBtn">Guardar categoría</button>
+                    <button type="button" id="cancelCategoryBtn">Cancelar</button>
+                </div>
+            </div>
         </section>
-
     </main>
 
     <footer></footer>
