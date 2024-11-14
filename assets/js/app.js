@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadCategories = () => {
         categories.forEach(category => addCategoryToUI(category));
+        toggleDeleteCategoryElements(); // Para habilitar/deshabilitar el select de eliminar categorías
     };
 
     const printFromLocalStorage = () => {
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const printFromSave = (task) => {
         const categoryBlock = getCategoryBlock(task.category_description);
-        categoryBlock.style.display = 'block'; // Mostrar el bloque de categoría al agregar una tarea
+        categoryBlock.style.display = 'block';
         categoryBlock.insertAdjacentHTML('beforeend', singleTask(task));
     };
 
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkAndHideEmptyCategoryBlocks = () => {
         document.querySelectorAll('.category-block').forEach(block => {
             if (block.querySelectorAll('.task').length === 0) {
-                block.style.display = 'none'; // Oculta el bloque si no tiene tareas
+                block.style.display = 'none';
             }
         });
     };
@@ -81,36 +82,36 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteCategoryBtn.addEventListener('click', () => {
         const categoryToDelete = categoryToDeleteSelect.value;
         if (categoryToDelete && categories.includes(categoryToDelete)) {
-            // Eliminar la categoría de las listas y UI
             categories = categories.filter(category => category !== categoryToDelete);
             localStorage.setItem('categories', JSON.stringify(categories));
 
-            // Eliminar el bloque de la categoría de la interfaz
             const categoryBlock = document.querySelector(`.category-block[data-category="${categoryToDelete}"]`);
             if (categoryBlock) {
                 categoryBlock.remove();
             }
 
-            // Eliminar la categoría de las tareas existentes
             taskList = taskList.map(task => {
                 if (task.category_description === categoryToDelete) {
-                    task.category_description = ''; // Asigna un valor vacío para tareas que usaban esa categoría
-                    task.category = ''; // También actualiza el campo de categoría de la tarea
+                    task.category_description = '';
+                    task.category = '';
                 }
                 return task;
             });
 
             localStorage.setItem('taskList', JSON.stringify(taskList));
-
-            // Recalcular las categorías de tareas para asegurarse de que no haya categorías huérfanas
             checkAndHideEmptyCategoryBlocks();
 
-            // Eliminar la opción del select
             const categoryOption = document.querySelector(`#categoryToDelete option[value="${categoryToDelete}"]`);
             if (categoryOption) {
                 categoryOption.remove();
             }
 
+            const taskCategoryOption = document.querySelector(`#category option[value="${categoryToDelete}"]`);
+            if (taskCategoryOption) {
+                taskCategoryOption.remove();
+            }
+
+            toggleDeleteCategoryElements();
             alert("Categoría eliminada exitosamente.");
         } else {
             alert("La categoría no existe o no fue seleccionada.");
@@ -134,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addCategoryToUI(newCategoryName);
             document.getElementById('newCategoryName').value = '';
             newCategoryForm.style.display = 'none';
+            toggleDeleteCategoryElements();
         } else {
             alert("Por favor, ingresa un nombre válido para la categoría o asegúrate de que no exista.");
         }
@@ -151,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         categoryToDeleteSelect.appendChild(newDeleteOption);
 
         const categoryBlock = getCategoryBlock(categoryName);
-        categoryBlock.style.display = 'none'; // Ocultar el bloque de categoría inicialmente
+        categoryBlock.style.display = 'none';
     };
 
     taskForm.addEventListener('submit', event => {
@@ -200,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateTaskList(task);
                     taskElement.remove();
                     printFromSave(task);
-                    checkAndHideEmptyCategoryBlocks(); // Revisa bloques vacíos tras mover la tarea
+                    checkAndHideEmptyCategoryBlocks();
                 }
             }
         });
@@ -247,15 +249,22 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('save').textContent = 'Actualizar Tarea';
     }
 
-    function updateTaskList(updatedTask) {
-        taskList = taskList.map(task => task.id === updatedTask.id ? updatedTask : task);
-        localStorage.setItem('taskList', JSON.stringify(taskList));
-    }
-
     function deleteTaskPermanently(taskId) {
         taskList = taskList.filter(task => task.id !== taskId);
         localStorage.setItem('taskList', JSON.stringify(taskList));
     }
+
+    function updateTaskList(task) {
+        const taskIndex = taskList.findIndex(t => t.id === task.id);
+        taskList[taskIndex] = task;
+        localStorage.setItem('taskList', JSON.stringify(taskList));
+    }
+
+    const toggleDeleteCategoryElements = () => {
+        const categoryOptionsExist = categoryToDeleteSelect.options.length > 1;
+        categoryToDeleteSelect.disabled = !categoryOptionsExist;
+        deleteCategoryBtn.disabled = !categoryOptionsExist;
+    };
 
     loadCategories();
     printFromLocalStorage();
