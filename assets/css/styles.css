@@ -8,8 +8,8 @@
 
 /* Fondo y diseño general */
 body {
-    background-color: #f3f6f9;
-    color: #4a4a4a;
+    background-color: #1a3550;
+    color: #6d2828;
     padding: 30px;
     font-size: 16px;
 }
@@ -34,7 +34,7 @@ h2 {
 
 /* Formulario */
 form {
-    background-color: #fff;
+    background-color: #0c91bdd3;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -285,5 +285,28 @@ section:hover {
 /* Ocultar el icono de papelera cuando la sección está visible */
 #trash.showTrash {
     display: block;
+}
+
+/* Contenedor principal */
+.mainContainer {
+    display: flex;
+    gap: 20px;
+}
+
+/* Formulario en el lado izquierdo */
+#taskForm {
+    flex: 1;
+    max-width: 350px; /* Ajusta el tamaño si es necesario */
+}
+
+/* Contenedor de tareas a la derecha */
+.taskSection {
+    flex: 3;
+}
+
+#taskContainer {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
