@@ -82,25 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteCategoryBtn.addEventListener('click', () => {
         const categoryToDelete = categoryToDeleteSelect.value;
         if (categoryToDelete && categories.includes(categoryToDelete)) {
+            // Eliminar la categoría de la lista de categorías
             categories = categories.filter(category => category !== categoryToDelete);
             localStorage.setItem('categories', JSON.stringify(categories));
 
+            // Eliminar las tareas asociadas a la categoría del localStorage
+            taskList = taskList.filter(task => task.category_description !== categoryToDelete);
+            localStorage.setItem('taskList', JSON.stringify(taskList));
+
+            // Remover el bloque de la categoría en la interfaz
             const categoryBlock = document.querySelector(`.category-block[data-category="${categoryToDelete}"]`);
             if (categoryBlock) {
                 categoryBlock.remove();
             }
 
-            taskList = taskList.map(task => {
-                if (task.category_description === categoryToDelete) {
-                    task.category_description = '';
-                    task.category = '';
-                }
-                return task;
-            });
-
-            localStorage.setItem('taskList', JSON.stringify(taskList));
-            checkAndHideEmptyCategoryBlocks();
-
+            // Remover la opción de la categoría eliminada del dropdown de categorías
             const categoryOption = document.querySelector(`#categoryToDelete option[value="${categoryToDelete}"]`);
             if (categoryOption) {
                 categoryOption.remove();
@@ -111,8 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 taskCategoryOption.remove();
             }
 
+            // Actualizar la visibilidad de los elementos relacionados a la eliminación de categoría
             toggleDeleteCategoryElements();
-            alert("Categoría eliminada exitosamente.");
+            checkAndHideEmptyCategoryBlocks();
+
+            alert("Categoría y sus tareas asociadas eliminadas exitosamente.");
         } else {
             alert("La categoría no existe o no fue seleccionada.");
         }
