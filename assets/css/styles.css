@@ -240,18 +240,20 @@ section:hover {
 
 /* Media queries para dispositivos pequeños */
 @media (max-width: 768px) {
-    #taskContainer {
-        flex-direction: column;
+    .mainContainer, .taskSection, form, .task {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
     }
-
     section {
         flex: 1 1 100%;
     }
-
-    form {
-        margin-bottom: 20px;
+    button {
+        width: 100%;
+        margin-top: 10px;
     }
 }
+
 
 /* Estilos del icono de papelera */
 #trashIcon {
@@ -310,3 +312,31 @@ section:hover {
     flex-wrap: wrap;
 }
 
+#categoryBlocksContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.category-block {
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 300px;
+    min-height: 100px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.category-block h3 {
+    margin-top: 0;
+}
+
+.task {
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
