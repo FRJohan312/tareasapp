@@ -21,12 +21,11 @@ header {
 }
 
 h1 {
-    font-size: 2.8rem;
-    color: #2a3d67;
+    font-size: 3rem;
+    color: #eff4ff;
     margin-bottom: 10px;
-    font-weight: 600;
+    font-weight: 800;
 }
-
 h2 {
     font-size: 2.2rem;
     color: #2a3d67;
@@ -48,10 +47,10 @@ form div {
 }
 
 label {
-    font-size: 1rem;
-    color: #2a3d67;
+    font-size: 1.5rem;
+    color: #ffffff;
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 input, textarea, select {
@@ -232,7 +231,7 @@ section h3 {
     color: white;
     border: none;
     border-radius: 30px;
-    padding: 10px 75px;
+    padding: 10px px;
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
