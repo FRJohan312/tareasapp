@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let categories = JSON.parse(localStorage.getItem('categories')) || [];
     let editingTaskId = null;
 
+// Sincronizar el contenido de Quill con el textarea antes de enviar el formulario
+document.getElementById('taskForm').addEventListener('submit', function() {
+    document.getElementById('description').value = quill.root.innerHTML;
+});
+
+
     // Mostrar/Ocultar Papelera
     trashButton.addEventListener('click', () => {
         trashContainer.style.display = trashContainer.style.display === 'none' ? 'block' : 'none';
@@ -79,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <p>${task.description}</p>
             <p><strong>Asignado a:</strong> ${task.assigned_to}</p>
             <p><strong>Fecha:</strong> ${task.endDate}</p>
-            <p><strong>Categoría:</strong> ${task.category_description}</p>
             <div class="task-actions">
                 <select name="move" class="move-dropdown">
                     ${categories.map(cat => `
