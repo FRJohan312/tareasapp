@@ -34,7 +34,7 @@
                 <label for="datetime">Fecha final</label>
                 <input name="datetime" id="endDate" type="datetime-local" />
             </div>
-            <button id="createCategoryBtn">+ Crear Nueva Categoría</button>
+            <button id="createCategoryBtn">Crear Nueva Categoría</button>
             <!-- Formulario para crear una nueva categoría -->
             <div id="newCategoryForm" style="display: none;">
                 <label for="newCategoryName">Nombre de la nueva categoría:</label>
@@ -42,13 +42,17 @@
                 <button id="saveCategoryBtn">Guardar Categoría</button>
                 <button id="cancelCategoryBtn">Cancelar</button>
             </div>
-                    <div>
+
+            <button id="eliminarCategoria">Eliminar Categoria</button>
+            <div id="">
             <label for="categoryToDelete">Selecciona la categoría a eliminar:</label>
             <select id="categoryToDelete" disabled>
                 <option value="" disabled selected>Selecciona una categoría</option>
             </select>
             <button id="deleteCategoryBtn" disabled>Eliminar Categoría</button> <!-- El botón estará deshabilitado hasta que se seleccione una categoría -->
-        </div>
+            </div>
+
+
             <div>
                 <label for="category">Tipo de tarea</label>
                 <select name="category" id="category" required>

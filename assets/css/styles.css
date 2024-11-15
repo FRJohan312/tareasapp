@@ -216,6 +216,27 @@ section h3 {
     background-color: #43a047;
 }
 
+#createCategoryBtn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 60px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#eliminarCategoria {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 60px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 /* Estilos para el botón de papelera */
 #trashButton {
     background-color: #ff4d4d;
