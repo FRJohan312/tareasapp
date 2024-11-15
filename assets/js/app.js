@@ -112,39 +112,45 @@ document.getElementById('taskForm').addEventListener('submit', function() {
     };
 
     // Función de eliminar categoría y tareas relacionadas
-    deleteCategoryBtn.addEventListener('click', () => {
+    deleteCategoryBtn.addEventListener('click', (event) => {
+        // Prevenir el envío del formulario
+        event.preventDefault();
+    
         const categoryToDelete = categoryToDeleteSelect.value;
         if (categoryToDelete && categories.includes(categoryToDelete)) {
             categories = categories.filter(category => category !== categoryToDelete);
             localStorage.setItem('categories', JSON.stringify(categories));
-
+    
             taskList = taskList.filter(task => task.category_description !== categoryToDelete);
             localStorage.setItem('taskList', JSON.stringify(taskList));
-
+    
             const categoryBlock = document.querySelector(`.category-block[data-category="${categoryToDelete}"]`);
             if (categoryBlock) {
                 categoryBlock.remove();
             }
-
+    
             const categoryOption = document.querySelector(`#categoryToDelete option[value="${categoryToDelete}"]`);
             if (categoryOption) {
                 categoryOption.remove();
             }
-
+    
             const taskCategoryOption = document.querySelector(`#category option[value="${categoryToDelete}"]`);
             if (taskCategoryOption) {
                 taskCategoryOption.remove();
             }
-
+    
             toggleDeleteCategoryElements();
             checkAndHideEmptyCategoryBlocks();
-
+    
             alert("Categoría y sus tareas asociadas eliminadas exitosamente.");
         } else {
             alert("La categoría no existe o no fue seleccionada.");
         }
     });
-    // VISTA PREVIA
+    
+    
+    
+    // VISTA
     document.addEventListener('click', (event) => {
         if (event.target.name === 'preview') {
             const taskElement = event.target.closest('article');
@@ -170,19 +176,23 @@ document.getElementById('taskForm').addEventListener('submit', function() {
     
 
     createCategoryBtn.addEventListener('click', () => {
+        event.preventDefault();
         newCategoryForm.style.display = 'block';
     });
 
     eliminarCategoriaBtn.addEventListener('click', () => {
+        event.preventDefault();
         eliminarCategoriaForm.style.display = 'block';
     });
 
     cancelCategoryBtn.addEventListener('click', () => {
+        event.preventDefault();
         newCategoryForm.style.display = 'none';
         document.getElementById('newCategoryName').value = '';
     });
 
     CancelarEliminar.addEventListener('click', () => {
+        event.preventDefault();
         eliminarCategoriaForm.style.display = 'none';
         document.getElementById('eliminarCategoria').value = '';
     });
