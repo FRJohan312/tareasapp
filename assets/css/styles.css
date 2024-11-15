@@ -8,8 +8,8 @@
 
 /* Fondo y diseño general */
 body {
-    background-color: #1a3550;
-    color: #6d2828;
+    background-color: #15244cf9;
+    color: #922121;
     padding: 30px;
     font-size: 16px;
     line-height: 1.5;
@@ -21,7 +21,7 @@ header {
 }
 
 h1 {
-    font-size: 3.5rem;                /* Aumenta el tamaño */
+    font-size: 3rem;                /* Aumenta el tamaño */
     color: #eff4ff;                   /* Color de texto claro */
     margin-bottom: 10px;
     font-weight: 800;
@@ -47,7 +47,7 @@ h1:hover {
 
 h2 {
     font-size: 3.5rem;             /* Aumenta el tamaño */
-    color: #2a3d67;                /* Color base */
+    color: #f7f7f7;                /* Color base */
     margin-bottom: 30px;
     font-weight: bold;             /* Hace el texto más grueso */
     text-transform: uppercase;     /* Convierte el texto a mayúsculas */
@@ -63,7 +63,7 @@ h2 {
 
 /* Efecto en hover */
 h2:hover {
-    color: #1029cb;                /* Cambia el color al pasar el mouse */
+    color: #ffffff;                /* Cambia el color al pasar el mouse */
     transform: scale(1.05);        /* Aumenta el tamaño ligeramente */
     text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3), 
                  6px 6px 15px rgba(0, 0, 0, 0.2); /* Aumenta la sombra en hover */
@@ -95,7 +95,7 @@ input, textarea, select {
     width: 100%;
     padding: 12px;
     font-size: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid #12b68b;
     border-radius: 8px;
     background-color: #fafafa;
     color: #4a4a4a;
@@ -127,7 +127,7 @@ button.save {
 }
 
 button.save:hover {
-    background-color: #5e64e5;
+    background-color: #1da92d;
 }
 
 button.clear {
@@ -149,10 +149,10 @@ button.clear:hover {
 
 section {
     flex: 1 1 24%;
-    background-color: #fff;
+    background-color: #3d30a0d3;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 20px rgba(190, 10, 10, 0.1);
     overflow-y: auto;
     transition: all 0.3s ease;
 }
