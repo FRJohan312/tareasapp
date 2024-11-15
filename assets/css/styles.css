@@ -11,8 +11,8 @@ body {
     background-color: #15244cf9;
     color: #922121;
     padding: 30px;
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 10px;
+    line-height: 1;
 }
 
 header {
@@ -150,9 +150,9 @@ button.limpiar:hover {
 section {
     flex: 1 1 24%;
     background-color: #3d30a0d3;
-    padding: 25px;
+    padding: 0.5px;
     border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(190, 10, 10, 0.1);
+    box-shadow: 0 5px 20px rgba(190, 10, 10, 0.1);
     overflow-y: auto;
     transition: all 0.3s ease;
 }
@@ -237,6 +237,7 @@ section h3:hover {
     z-index: -1;  /* Para que esté detrás del contenido */
 }
 
+
 /* Título */
 .tarea h4 {
     font-size: 1.5rem;
@@ -247,7 +248,18 @@ section h3:hover {
     letter-spacing: 1.5px;
     transition: all 0.3s ease-in-out;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);  /* Sombra para el texto */
+
+    /* Evitar que el título se desborde */
+    word-wrap: break-word;        /* Permite que las palabras largas se ajusten */
+    overflow-wrap: break-word;    /* Alternativa para asegurar el ajuste de palabras largas */
+    white-space: normal;          /* Permite que el texto fluya en varias líneas */
+    max-width: 100%;              /* Asegura que no se salga del contenedor */
+    display: block;               /* Garantiza que sea un bloque y ocupe el espacio completo */
+
+
+    text-align: center;           /* Centra el texto horizontalmente */
 }
+
 
 .tarea:hover h4 {
     color: #6a75ff;
@@ -460,10 +472,10 @@ section h3:hover {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #e5e5e5;
     margin: auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #080808;
     border-radius: 8px;
     width: 50%;
     max-width: 600px; /* Limita el ancho del modal */
@@ -530,10 +542,10 @@ section h3:hover {
 }
 .categoria-block {
     flex: 0 0 auto;                     /* Evita que las categorías se estiren o ajusten su tamaño */
-    width: 250px;                       /* Ancho fijo para cada categoría */
+    width: 390px;                       /* Ancho fijo para cada categoría */
     min-height: 120px;                   /* Altura mínima ajustada para mayor espacio */
     background-color: #ffffff;          /* Fondo blanco para resaltar el contenido */
-    border-radius: 12px;                /* Bordes redondeados más suaves */
+    border-radius: 25px;                /* Bordes redondeados más suaves */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Sombra más pronunciada para dar profundidad */
     transition: all 0.3s ease;           /* Transición suave para los efectos */
     padding: 15px;                      /* Espacio interno para mejorar el contenido */

@@ -361,4 +361,5 @@ document.getElementById('formularioTareas').addEventListener('submit', function(
 
     loadcategorias();
     printFromLocalStorage();
+    
 });
