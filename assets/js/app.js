@@ -1,51 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const categorySelect = document.getElementById('category');
-    const categoryBlocksContainer = document.getElementById('categoryBlocksContainer');
-    const createCategoryBtn = document.getElementById('createCategoryBtn');
-    const newCategoryForm = document.getElementById('newCategoryForm');
-    const saveCategoryBtn = document.getElementById('saveCategoryBtn');
-    const cancelCategoryBtn = document.getElementById('cancelCategoryBtn');
+    const categoriaSelect = document.getElementById('categoria');
+    const blockContenedorCatg = document.getElementById('blockContenedorCatg');
+    const crearBotonCategoria = document.getElementById('crearBotonCategoria');
+    const nuevoFormularioCategoria = document.getElementById('nuevoFormularioCategoria');
+    const botonGuardarCategoria = document.getElementById('botonGuardarCategoria');
+    const botonCancelarCategoria = document.getElementById('botonCancelarCategoria');
     const eliminarCategoriaForm = document.getElementById('eliminarCategoriaForm');
     const CancelarEliminar = document.getElementById('CancelarEliminar');
     const eliminarCategoriaBtn = document.getElementById('eliminarCategoriaBtn');
-    const deleteCategoryBtn = document.getElementById('deleteCategoryBtn');
-    const categoryToDeleteSelect = document.getElementById('categoryToDelete');
-    const taskForm = document.getElementById('taskForm');
-    const trashButton = document.getElementById('trashButton');
-    const trashContainer = document.getElementById('trashContainer');
-    const deletedTasksContainer = document.getElementById('deletedTasksContainer');
+    const botonEliminarCatg = document.getElementById('botonEliminarCatg');
+    const categoriaToDeleteSelect = document.getElementById('categoriaToDelete');
+    const formularioTareas = document.getElementById('formularioTareas');
+    const botonPapelera = document.getElementById('botonPapelera');
+    const contenedorPapelera = document.getElementById('contenedorPapelera');
+    const contenedorTareasEliminadas = document.getElementById('contenedorTareasEliminadas');
     
-    let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
-    let categories = JSON.parse(localStorage.getItem('categories')) || [];
-    let editingTaskId = null;
+    let listaTareas = JSON.parse(localStorage.getItem('listaTareas')) || [];
+    let categorias = JSON.parse(localStorage.getItem('categorias')) || [];
+    let editandotareaId = null;
 
 // Sincronizar el contenido de Quill con el textarea antes de enviar el formulario
-document.getElementById('taskForm').addEventListener('submit', function() {
+document.getElementById('formularioTareas').addEventListener('submit', function() {
     document.getElementById('description').value = quill.root.innerHTML;
 });
 
 
     // Mostrar/Ocultar Papelera
-    trashButton.addEventListener('click', () => {
-        trashContainer.style.display = trashContainer.style.display === 'none' ? 'block' : 'none';
-        loadDeletedTasks();
+    botonPapelera.addEventListener('click', () => {
+        contenedorPapelera.style.display = contenedorPapelera.style.display === 'none' ? 'block' : 'none';
+        loadborradotareas();
     });
 
-    const loadDeletedTasks = () => {
-        deletedTasksContainer.innerHTML = '';
-        taskList.filter(task => task.status === 'deleted').forEach(task => {
-            deletedTasksContainer.insertAdjacentHTML('beforeend', singleDeletedTask(task));
+    const loadborradotareas = () => {
+        contenedorTareasEliminadas.innerHTML = '';
+        listaTareas.filter(tarea => tarea.status === 'borrado').forEach(tarea => {
+            contenedorTareasEliminadas.insertAdjacentHTML('beforeend', tareaBorrada(tarea));
         });
     };
 
-    const singleDeletedTask = (task) => `
-        <article id="${task.id}" class="task deleted-task">
-            <h4>${task.title}</h4>
-            <p>${task.description}</p>
-            <p><strong>Asignado a:</strong> ${task.assigned_to}</p>
-            <p><strong>Fecha:</strong> ${task.endDate}</p>
-            <p><strong>Categoría:</strong> ${task.category_description}</p>
-            <div class="task-actions">
+    const tareaBorrada = (tarea) => `
+        <article id="${tarea.id}" class="tarea borrado-tarea">
+            <h4>${tarea.title}</h4>
+            <p>${tarea.description}</p>
+            <p><strong>Asignado a:</strong> ${tarea.assigned_to}</p>
+            <p><strong>Fecha:</strong> ${tarea.fechaFin}</p>
+            <p><strong>Categoría:</strong> ${tarea.categoria_description}</p>
+            <div class="tarea-actions">
                 <button name="restore" class="restore">Restaurar Tarea</button>
                 <button name="deletePermanent" class="deletePermanent">Eliminar Permanentemente</button>
             </div>
@@ -58,31 +58,31 @@ document.getElementById('taskForm').addEventListener('submit', function() {
         document.getElementById(elementId).value = formattedDate;
     };
 
-    setInitialDate('endDate');
+    setInitialDate('fechaFin');
 
-    const loadCategories = () => {
-        categories.forEach(category => addCategoryToUI(category));
-        toggleDeleteCategoryElements();
+    const loadcategorias = () => {
+        categorias.forEach(categoria => addcategoriaToUI(categoria));
+        toggleDeletecategoriaElements();
     };
 
     const printFromLocalStorage = () => {
-        taskList.forEach(task => {
-            if (task.status !== 'deleted') {
-                printFromSave(task);
+        listaTareas.forEach(tarea => {
+            if (tarea.status !== 'borrado') {
+                mostrarGuardado(tarea);
             }
         });
     };
 
-    const printFromSave = (task) => {
-        const categoryBlock = getCategoryBlock(task.category_description);
-        categoryBlock.style.display = 'block';
-        categoryBlock.insertAdjacentHTML('beforeend', singleTask(task));
+    const mostrarGuardado = (tarea) => {
+        const blockCategoria = obtenerblockCategoria(tarea.categoria_description);
+        blockCategoria.style.display = 'block';
+        blockCategoria.insertAdjacentHTML('beforeend', unaTarea(tarea));
     };
 
-    const singleTask = (task) => `
-    <article id="${task.id}" class="task">
-        <h4>${task.title}</h4>
-        <div class="task-actions">
+    const unaTarea = (tarea) => `
+    <article id="${tarea.id}" class="tarea">
+        <h4>${tarea.title}</h4>
+        <div class="tarea-actions">
             <button name="preview" class="preview">Vista previa</button>
             <button name="edit" class="edit">Editar</button>
             <button name="delete" class="delete">Eliminar</button>
@@ -91,56 +91,56 @@ document.getElementById('taskForm').addEventListener('submit', function() {
 `;
 
 
-    const getCategoryBlock = (categoryName) => {
-        let categoryBlock = document.querySelector(`.category-block[data-category="${categoryName}"]`);
-        if (!categoryBlock) {
-            categoryBlock = document.createElement('div');
-            categoryBlock.classList.add('category-block');
-            categoryBlock.dataset.category = categoryName;
-            categoryBlock.innerHTML = `<h3>${categoryName}</h3>`;
-            categoryBlocksContainer.appendChild(categoryBlock);
+    const obtenerblockCategoria = (categoriaName) => {
+        let blockCategoria = document.querySelector(`.categoria-block[data-categoria="${categoriaName}"]`);
+        if (!blockCategoria) {
+            blockCategoria = document.createElement('div');
+            blockCategoria.classList.add('categoria-block');
+            blockCategoria.dataset.categoria = categoriaName;
+            blockCategoria.innerHTML = `<h3>${categoriaName}</h3>`;
+            blockContenedorCatg.appendChild(blockCategoria);
         }
-        return categoryBlock;
+        return blockCategoria;
     };
 
-    const checkAndHideEmptyCategoryBlocks = () => {
-        document.querySelectorAll('.category-block').forEach(block => {
-            if (block.querySelectorAll('.task').length === 0) {
+    const ocultarCategoriaVacia = () => {
+        document.querySelectorAll('.categoria-block').forEach(block => {
+            if (block.querySelectorAll('.tarea').length === 0) {
                 block.style.display = 'none';
             }
         });
     };
 
     // Función de eliminar categoría y tareas relacionadas
-    deleteCategoryBtn.addEventListener('click', (event) => {
+    botonEliminarCatg.addEventListener('click', (event) => {
         // Prevenir el envío del formulario
         event.preventDefault();
     
-        const categoryToDelete = categoryToDeleteSelect.value;
-        if (categoryToDelete && categories.includes(categoryToDelete)) {
-            categories = categories.filter(category => category !== categoryToDelete);
-            localStorage.setItem('categories', JSON.stringify(categories));
+        const categoriaToDelete = categoriaToDeleteSelect.value;
+        if (categoriaToDelete && categorias.includes(categoriaToDelete)) {
+            categorias = categorias.filter(categoria => categoria !== categoriaToDelete);
+            localStorage.setItem('categorias', JSON.stringify(categorias));
     
-            taskList = taskList.filter(task => task.category_description !== categoryToDelete);
-            localStorage.setItem('taskList', JSON.stringify(taskList));
+            listaTareas = listaTareas.filter(tarea => tarea.categoria_description !== categoriaToDelete);
+            localStorage.setItem('listaTareas', JSON.stringify(listaTareas));
     
-            const categoryBlock = document.querySelector(`.category-block[data-category="${categoryToDelete}"]`);
-            if (categoryBlock) {
-                categoryBlock.remove();
+            const blockCategoria = document.querySelector(`.categoria-block[data-categoria="${categoriaToDelete}"]`);
+            if (blockCategoria) {
+                blockCategoria.remove();
             }
     
-            const categoryOption = document.querySelector(`#categoryToDelete option[value="${categoryToDelete}"]`);
-            if (categoryOption) {
-                categoryOption.remove();
+            const categoriaOption = document.querySelector(`#categoriaToDelete option[value="${categoriaToDelete}"]`);
+            if (categoriaOption) {
+                categoriaOption.remove();
             }
     
-            const taskCategoryOption = document.querySelector(`#category option[value="${categoryToDelete}"]`);
-            if (taskCategoryOption) {
-                taskCategoryOption.remove();
+            const tareacategoriaOption = document.querySelector(`#categoria option[value="${categoriaToDelete}"]`);
+            if (tareacategoriaOption) {
+                tareacategoriaOption.remove();
             }
     
-            toggleDeleteCategoryElements();
-            checkAndHideEmptyCategoryBlocks();
+            toggleDeletecategoriaElements();
+            ocultarCategoriaVacia();
     
             alert("Categoría y sus tareas asociadas eliminadas exitosamente.");
         } else {
@@ -153,16 +153,16 @@ document.getElementById('taskForm').addEventListener('submit', function() {
     // VISTA
     document.addEventListener('click', (event) => {
         if (event.target.name === 'preview') {
-            const taskElement = event.target.closest('article');
-            const taskId = taskElement?.id;
-            const task = taskList.find(t => t.id === taskId);
+            const tareaElement = event.target.closest('article');
+            const tareaId = tareaElement?.id;
+            const tarea = listaTareas.find(t => t.id === tareaId);
     
-            if (task) {
-                document.getElementById('previewTitle').textContent = task.title;
-                document.getElementById('previewDescription').innerHTML = task.description;
-                document.getElementById('previewAssignedTo').textContent = task.assigned_to;
-                document.getElementById('previewEndDate').textContent = task.endDate;
-                document.getElementById('previewCategory').textContent = task.category_description;
+            if (tarea) {
+                document.getElementById('previewTitle').textContent = tarea.title;
+                document.getElementById('previewDescription').innerHTML = tarea.description;
+                document.getElementById('previewAsignadoA').textContent = tarea.assigned_to;
+                document.getElementById('previewfechaFin').textContent = tarea.fechaFin;
+                document.getElementById('previewcategoria').textContent = tarea.categoria_description;
     
                 document.getElementById('previewModal').style.display = 'block';
             }
@@ -175,9 +175,9 @@ document.getElementById('taskForm').addEventListener('submit', function() {
     });
     
 
-    createCategoryBtn.addEventListener('click', () => {
+    crearBotonCategoria.addEventListener('click', () => {
         event.preventDefault();
-        newCategoryForm.style.display = 'block';
+        nuevoFormularioCategoria.style.display = 'block';
     });
 
     eliminarCategoriaBtn.addEventListener('click', () => {
@@ -185,10 +185,10 @@ document.getElementById('taskForm').addEventListener('submit', function() {
         eliminarCategoriaForm.style.display = 'block';
     });
 
-    cancelCategoryBtn.addEventListener('click', () => {
+    botonCancelarCategoria.addEventListener('click', () => {
         event.preventDefault();
-        newCategoryForm.style.display = 'none';
-        document.getElementById('newCategoryName').value = '';
+        nuevoFormularioCategoria.style.display = 'none';
+        document.getElementById('nuevoNombreCategoria').value = '';
     });
 
     CancelarEliminar.addEventListener('click', () => {
@@ -197,15 +197,15 @@ document.getElementById('taskForm').addEventListener('submit', function() {
         document.getElementById('eliminarCategoria').value = '';
     });
 
-    saveCategoryBtn.addEventListener('click', () => {
-        const newCategoryName = document.getElementById('newCategoryName').value.trim();
-        if (newCategoryName && !categories.includes(newCategoryName)) {
-            categories.push(newCategoryName);
-            localStorage.setItem('categories', JSON.stringify(categories));
-            addCategoryToUI(newCategoryName);
-            document.getElementById('newCategoryName').value = '';
-            newCategoryForm.style.display = 'none';
-            toggleDeleteCategoryElements();
+    botonGuardarCategoria.addEventListener('click', () => {
+        const nuevoNombreCategoria = document.getElementById('nuevoNombreCategoria').value.trim();
+        if (nuevoNombreCategoria && !categorias.includes(nuevoNombreCategoria)) {
+            categorias.push(nuevoNombreCategoria);
+            localStorage.setItem('categorias', JSON.stringify(categorias));
+            addcategoriaToUI(nuevoNombreCategoria);
+            document.getElementById('nuevoNombreCategoria').value = '';
+            nuevoFormularioCategoria.style.display = 'none';
+            toggleDeletecategoriaElements();
         } else {
             alert("Por favor, ingresa un nombre válido para la categoría o asegúrate de que no exista.");
         }
@@ -221,144 +221,144 @@ document.getElementById('taskForm').addEventListener('submit', function() {
         }
     });
 
-    const addCategoryToUI = (categoryName) => {
+    const addcategoriaToUI = (categoriaName) => {
         const newOption = document.createElement('option');
-        newOption.value = categoryName;
-        newOption.textContent = categoryName;
-        categorySelect.appendChild(newOption);
+        newOption.value = categoriaName;
+        newOption.textContent = categoriaName;
+        categoriaSelect.appendChild(newOption);
 
         const newDeleteOption = document.createElement('option');
-        newDeleteOption.value = categoryName;
-        newDeleteOption.textContent = categoryName;
-        categoryToDeleteSelect.appendChild(newDeleteOption);
+        newDeleteOption.value = categoriaName;
+        newDeleteOption.textContent = categoriaName;
+        categoriaToDeleteSelect.appendChild(newDeleteOption);
 
-        const categoryBlock = getCategoryBlock(categoryName);
-        categoryBlock.style.display = 'none';
+        const blockCategoria = obtenerblockCategoria(categoriaName);
+        blockCategoria.style.display = 'none';
     };
 
-    taskForm.addEventListener('submit', event => {
+    formularioTareas.addEventListener('submit', event => {
         event.preventDefault();
-        const task = {
-            id: editingTaskId || Math.random().toString(16).slice(2),
-            title: taskForm.title.value,
-            description: taskForm.description.value,
-            assigned_to: taskForm.assignedTo.value,
-            endDate: taskForm.endDate.value,
-            category: taskForm.category.value,
-            category_description: taskForm.category.options[taskForm.category.selectedIndex].text,
+        const tarea = {
+            id: editandotareaId || Math.random().toString(16).slice(2),
+            title: formularioTareas.title.value,
+            description: formularioTareas.description.value,
+            assigned_to: formularioTareas.AsignadoA.value,
+            fechaFin: formularioTareas.fechaFin.value,
+            categoria: formularioTareas.categoria.value,
+            categoria_description: formularioTareas.categoria.options[formularioTareas.categoria.selectedIndex].text,
             status: "active"
         };
 
-        if (editingTaskId) {
-            const taskIndex = taskList.findIndex(t => t.id === editingTaskId);
-            taskList[taskIndex] = task;
-            localStorage.setItem('taskList', JSON.stringify(taskList));
-            document.getElementById(editingTaskId).outerHTML = singleTask(task);
-            editingTaskId = null;
-            document.getElementById('save').textContent = 'Guardar Tarea';
+        if (editandotareaId) {
+            const tareaIndex = listaTareas.findIndex(t => t.id === editandotareaId);
+            listaTareas[tareaIndex] = tarea;
+            localStorage.setItem('listaTareas', JSON.stringify(listaTareas));
+            document.getElementById(editandotareaId).outerHTML = unaTarea(tarea);
+            editandotareaId = null;
+            document.getElementById('guardar').textContent = 'Guardar Tarea';
         } else {
-            taskList.push(task);
-            localStorage.setItem('taskList', JSON.stringify(taskList));
-            printFromSave(task);
+            listaTareas.push(tarea);
+            localStorage.setItem('listaTareas', JSON.stringify(listaTareas));
+            mostrarGuardado(tarea);
         }
 
-        taskForm.reset();
-        setInitialDate('endDate');
+        formularioTareas.reset();
+        setInitialDate('fechaFin');
     });
 
-    handleTaskClick(document.querySelector('#categoryBlocksContainer'));
+    handletareaClick(document.querySelector('#blockContenedorCatg'));
     handleTrashClick();
 
-    function handleTaskClick(container) {
+    function handletareaClick(container) {
         container.addEventListener('change', event => {
             if (event.target.classList.contains('move-dropdown')) {
-                const taskElement = event.target.closest('article');
-                const taskId = taskElement?.id;
-                const newCategory = event.target.value;
+                const tareaElement = event.target.closest('article');
+                const tareaId = tareaElement?.id;
+                const newcategoria = event.target.value;
 
-                const task = taskList.find(t => t.id === taskId);
-                if (task) {
-                    task.category = newCategory;
-                    task.category_description = newCategory;
-                    updateTaskList(task);
-                    taskElement.remove();
-                    printFromSave(task);
-                    checkAndHideEmptyCategoryBlocks();
+                const tarea = listaTareas.find(t => t.id === tareaId);
+                if (tarea) {
+                    tarea.categoria = newcategoria;
+                    tarea.categoria_description = newcategoria;
+                    updatelistaTareas(tarea);
+                    tareaElement.remove();
+                    mostrarGuardado(tarea);
+                    ocultarCategoriaVacia();
                 }
             }
         });
 
         container.addEventListener('click', event => {
-            const taskElement = event.target.closest('article');
-            const taskId = taskElement?.id;
-            if (!taskId) return;
+            const tareaElement = event.target.closest('article');
+            const tareaId = tareaElement?.id;
+            if (!tareaId) return;
 
-            const task = taskList.find(t => t.id === taskId);
+            const tarea = listaTareas.find(t => t.id === tareaId);
 
             if (event.target.name === 'delete') {
-                task.status = 'deleted';
-                updateTaskList(task);
-                taskElement.remove();
-                checkAndHideEmptyCategoryBlocks();
+                tarea.status = 'borrado';
+                updatelistaTareas(tarea);
+                tareaElement.remove();
+                ocultarCategoriaVacia();
             }
 
             if (event.target.name === 'edit') {
-                populateTaskForm(task);
+                populateformularioTareas(tarea);
             }
         });
     }
 
     function handleTrashClick() {
-        deletedTasksContainer.addEventListener('click', event => {
-            const taskElement = event.target.closest('article');
-            const taskId = taskElement?.id;
-            if (!taskId) return;
+        contenedorTareasEliminadas.addEventListener('click', event => {
+            const tareaElement = event.target.closest('article');
+            const tareaId = tareaElement?.id;
+            if (!tareaId) return;
 
-            const task = taskList.find(t => t.id === taskId);
+            const tarea = listaTareas.find(t => t.id === tareaId);
 
             if (event.target.name === 'restore') {
-                task.status = 'active';
-                updateTaskList(task);
-                taskElement.remove();
-                printFromSave(task);
-                checkAndHideEmptyCategoryBlocks();
+                tarea.status = 'active';
+                updatelistaTareas(tarea);
+                tareaElement.remove();
+                mostrarGuardado(tarea);
+                ocultarCategoriaVacia();
             }
 
             if (event.target.name === 'deletePermanent') {
-                deleteTaskPermanently(taskId);
-                taskElement.remove();
-                checkAndHideEmptyCategoryBlocks();
+                deletetareaPermanently(tareaId);
+                tareaElement.remove();
+                ocultarCategoriaVacia();
             }
         });
     }
 
-    function populateTaskForm(task) {
-        taskForm.title.value = task.title;
-        taskForm.description.value = task.description;
-        taskForm.assignedTo.value = task.assigned_to;
-        taskForm.endDate.value = task.endDate;
-        taskForm.category.value = task.category;
-        editingTaskId = task.id;
-        document.getElementById('save').textContent = 'Actualizar Tarea';
+    function populateformularioTareas(tarea) {
+        formularioTareas.title.value = tarea.title;
+        formularioTareas.description.value = tarea.description;
+        formularioTareas.AsignadoA.value = tarea.assigned_to;
+        formularioTareas.fechaFin.value = tarea.fechaFin;
+        formularioTareas.categoria.value = tarea.categoria;
+        editandotareaId = tarea.id;
+        document.getElementById('guardar').textContent = 'Actualizar Tarea';
     }
 
-    function deleteTaskPermanently(taskId) {
-        taskList = taskList.filter(task => task.id !== taskId);
-        localStorage.setItem('taskList', JSON.stringify(taskList));
+    function deletetareaPermanently(tareaId) {
+        listaTareas = listaTareas.filter(tarea => tarea.id !== tareaId);
+        localStorage.setItem('listaTareas', JSON.stringify(listaTareas));
     }
 
-    function updateTaskList(task) {
-        const taskIndex = taskList.findIndex(t => t.id === task.id);
-        taskList[taskIndex] = task;
-        localStorage.setItem('taskList', JSON.stringify(taskList));
+    function updatelistaTareas(tarea) {
+        const tareaIndex = listaTareas.findIndex(t => t.id === tarea.id);
+        listaTareas[tareaIndex] = tarea;
+        localStorage.setItem('listaTareas', JSON.stringify(listaTareas));
     }
 
-    const toggleDeleteCategoryElements = () => {
-        const categoryOptionsExist = categoryToDeleteSelect.options.length > 1;
-        categoryToDeleteSelect.disabled = !categoryOptionsExist;
-        deleteCategoryBtn.disabled = !categoryOptionsExist;
+    const toggleDeletecategoriaElements = () => {
+        const categoriaOptionsExist = categoriaToDeleteSelect.options.length > 1;
+        categoriaToDeleteSelect.disabled = !categoriaOptionsExist;
+        botonEliminarCatg.disabled = !categoriaOptionsExist;
     };
 
-    loadCategories();
+    loadcategorias();
     printFromLocalStorage();
 });

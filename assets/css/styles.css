@@ -121,27 +121,27 @@ button {
     transition: all 0.3s ease;
 }
 
-button.save {
+button.guardar {
     background-color: #6a75ff;
     color: white;
 }
 
-button.save:hover {
+button.guardar:hover {
     background-color: #1da92d;
 }
 
-button.clear {
+button.limpiar {
     background-color: #ff4d4d;
     color: white;
     margin-left: 10px;
 }
 
-button.clear:hover {
+button.limpiar:hover {
     background-color: #f44336;
 }
 
 /* Secciones de tareas */
-#taskContainer {
+#tareaContainer {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
@@ -206,7 +206,7 @@ section h3:hover {
 
 /* Estilos de tareas */
 /* Estilos de tareas */
-.task {
+.tarea {
     background-color: #ffffff;
     border-radius: 20px;
     padding: 20px;
@@ -218,14 +218,14 @@ section h3:hover {
     position: relative;  /* Para usar pseudo-elementos */
 }
 
-.task:hover {
+.tarea:hover {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
     transform: translateY(-10px);
     border: 2px solid #6a75ff;
 }
 
 /* Añadimos un borde decorativo */
-.task::after {
+.tarea::after {
     content: "";
     position: absolute;
     top: -5px;
@@ -238,7 +238,7 @@ section h3:hover {
 }
 
 /* Título */
-.task h4 {
+.tarea h4 {
     font-size: 1.5rem;
     color: #2a3d67;
     margin-bottom: 15px;
@@ -249,14 +249,14 @@ section h3:hover {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);  /* Sombra para el texto */
 }
 
-.task:hover h4 {
+.tarea:hover h4 {
     color: #6a75ff;
     transform: translateX(10px);
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);  /* Sombra más intensa en hover */
 }
 
 /* Descripción */
-.task p {
+.tarea p {
     max-height: 80px;
     overflow-y: auto;
     word-wrap: break-word;
@@ -270,14 +270,14 @@ section h3:hover {
     padding-left: 12px;  /* Aumentamos el espacio al lado del borde */
 }
 
-.task:hover p {
+.tarea:hover p {
     color: #444;
     transform: translateX(5px);
     border-left: 4px solid #4caf50;  /* Cambia el color del borde al hacer hover */
 }
 
 /* Botones */
-.task .buttons button {
+.tarea .buttons button {
     padding: 12px 18px;
     font-size: 1rem;
     margin-right: 12px;
@@ -291,7 +291,7 @@ section h3:hover {
     position: relative;
 }
 
-.task .buttons button::before {
+.tarea .buttons button::before {
     content: "";
     position: absolute;
     top: 0;
@@ -304,73 +304,73 @@ section h3:hover {
     transition: opacity 0.3s ease-in-out;
 }
 
-.task .buttons button:hover::before {
+.tarea .buttons button:hover::before {
     opacity: 1;  /* Hace visible el fondo gradiente cuando se hace hover */
 }
 
-#taskContainer .task .buttons button[name="move"] {
+#tareaContainer .tarea .buttons button[name="move"] {
     background-color: #6a75ff;
     color: white;
     border: 2px solid #6a75ff;
 }
 
-#taskContainer .task .buttons button[name="move"]:hover {
+#tareaContainer .tarea .buttons button[name="move"]:hover {
     background-color: #5e64e5;
     color: white;
     transform: translateY(-5px);
     border-color: #5e64e5;
 }
 
-#taskContainer .task .buttons button[name="delete"] {
+#tareaContainer .tarea .buttons button[name="delete"] {
     background-color: #ff4d4d;
     color: white;
     border: 2px solid #ff4d4d;
 }
 
-#taskContainer .task .buttons button[name="delete"]:hover {
+#tareaContainer .tarea .buttons button[name="delete"]:hover {
     background-color: #f44336;
     transform: translateY(-5px);
     border-color: #f44336;
 }
 
-#taskContainer .task .buttons button[name="edit"] {
+#tareaContainer .tarea .buttons button[name="edit"] {
     background-color: #ffb84d;
     color: white;
     border: 2px solid #ffb84d;
 }
 
-#taskContainer .task .buttons button[name="edit"]:hover {
+#tareaContainer .tarea .buttons button[name="edit"]:hover {
     background-color: #ff9f29;
     transform: translateY(-5px);
     border-color: #ff9f29;
 }
 
-#taskContainer .task .buttons button[name="deletePermanent"] {
+#tareaContainer .tarea .buttons button[name="deletePermanent"] {
     background-color: #777;
     color: white;
     border: 2px solid #777;
 }
 
-#taskContainer .task .buttons button[name="deletePermanent"]:hover {
+#tareaContainer .tarea .buttons button[name="deletePermanent"]:hover {
     background-color: #555;
     transform: translateY(-5px);
     border-color: #555;
 }
 
-#taskContainer .task .buttons button[name="restore"] {
+#tareaContainer .tarea .buttons button[name="restore"] {
     background-color: #4caf50;
     color: white;
     border: 2px solid #4caf50;
 }
 
-#taskContainer .task .buttons button[name="restore"]:hover {
+#tareaContainer .tarea .buttons button[name="restore"]:hover {
     background-color: #43a047;
     transform: translateY(-5px);
     border-color: #43a047;
 }
 
 
-#createCategoryBtn {
+#crearBotonCategoria {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -394,7 +394,7 @@ section h3:hover {
     margin-left: 20px;
 }
 /* Estilos para el botón de papelera */
-#trashButton {
+#botonPapelera {
     background-color: #ff4d4d;
     color: white;
     border: none;
@@ -408,20 +408,20 @@ section h3:hover {
     justify-content: center;
 }
 
-#trashButton i {
+#botonPapelera i {
     font-size: 1.2rem; /* Ajusta el tamaño del icono */
     margin-right: 8px; /* Espacio entre el ícono y el texto */
 }
 
 /* Hover para el botón */
-#trashButton:hover {
+#botonPapelera:hover {
     background-color: #f44336;
     transform: scale(1.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Estilos para el contenedor de la papelera */
-#trashContainer {
+#contenedorPapelera {
     background-color: #fff4f4;
     border: 2px dashed #ff4d4d;
     padding: 20px;
@@ -431,16 +431,16 @@ section h3:hover {
     display: none; /* Asegura que se mantenga oculto hasta ser activado */
 }
 
-#trashContainer.showTrash {
+#contenedorPapelera.showTrash {
     display: block; /* Se muestra cuando se activa */
 }
 
-#trashContainer h2 {
+#contenedorPapelera h2 {
     color: #ff4d4d;
 }
 
 /* Contenedor de las tareas eliminadas */
-#deletedTasksContainer {
+#contenedorTareasEliminadas {
     margin-top: 20px;
 }
 
@@ -502,25 +502,25 @@ section h3:hover {
 
 
 /* Contenedor principal */
-.mainContainer {
+.contenedorPrincipal {
     display: flex;
     gap: 20px;
 }
 
 /* Formulario en el lado izquierdo */
-#taskForm {
+#formularioTareas {
     flex: 1;
     max-width: 350px;
 }
 
 
-#taskContainer {
+#tareaContainer {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
 }
 
-#categoryBlocksContainer {
+#blockContenedorCatg {
     display: flex;              /* Utilizamos flexbox para mantener las categorías en una fila */
     gap: 20px;                  /* Espacio entre las categorías */
     flex-wrap: nowrap;          /* Evita que las categorías se muevan a la siguiente línea */
@@ -528,7 +528,7 @@ section h3:hover {
     padding: 10px 0;            /* Agrega algo de espacio alrededor del contenedor */
     scroll-behavior: smooth;    /* Desplazamiento suave */
 }
-.category-block {
+.categoria-block {
     flex: 0 0 auto;                     /* Evita que las categorías se estiren o ajusten su tamaño */
     width: 250px;                       /* Ancho fijo para cada categoría */
     min-height: 120px;                   /* Altura mínima ajustada para mayor espacio */
@@ -545,14 +545,14 @@ section h3:hover {
 }
 
 /* Efecto hover para animación y resaltado */
-.category-block:hover {
+.categoria-block:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Sombra más fuerte al hacer hover */
     transform: translateY(-5px);             /* Desplazamiento suave hacia arriba */
     background-color: #f3f3f3;               /* Cambio de fondo al pasar el mouse */
 }
 
 /* Borde completo animado con degradado */
-.category-block::before {
+.categoria-block::before {
     content: '';
     position: absolute;
     top: 0;
@@ -566,13 +566,13 @@ section h3:hover {
     transform: scale(1.05);                 /* Agrega un poco de zoom al borde */
 }
 
-.category-block:hover::before {
+.categoria-block:hover::before {
     opacity: 1;                             /* Aparece el borde degradado al hacer hover */
     transform: scale(1);                     /* El borde vuelve a su tamaño normal */
 }
 
 /* Agregar estilo al texto y contenido */
-.category-block h4 {
+.categoria-block h4 {
     font-size: 1.4rem;                   /* Tamaño de fuente mayor para títulos */
     color: #333;                         /* Color de texto más oscuro para visibilidad */
     margin-bottom: 15px;                  /* Espacio debajo del título */
@@ -580,7 +580,7 @@ section h3:hover {
 }
 
 /* Animación para el borde en el contenido */
-.category-block p {
+.categoria-block p {
     font-size: 1rem;                     /* Fuente legible para la descripción */
     color: #666;                         /* Color de texto gris claro */
     line-height: 1.5;                    /* Mejora la legibilidad */
@@ -589,6 +589,6 @@ section h3:hover {
 }
 
 /* Cambio de color del texto cuando se pasa el mouse */
-.category-block:hover p {
+.categoria-block:hover p {
     color: #2a3d67;                      /* Texto más oscuro al pasar el mouse */
 }
