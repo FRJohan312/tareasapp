@@ -227,12 +227,12 @@ section h3 {
     transition: all 0.3s ease;
 }
 
-#eliminarCategoria {
+#eliminarCategoriaBtn {
     background-color: #ff0000;
     color: white;
     border: none;
     border-radius: 30px;
-    padding: 10px 60px;
+    padding: 10px 75px;
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;

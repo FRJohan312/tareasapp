@@ -34,6 +34,14 @@
                 <label for="datetime">Fecha final</label>
                 <input name="datetime" id="endDate" type="datetime-local" />
             </div>
+
+            <div>
+                <label for="category">Categoria</label>
+                <select name="category" id="category" required>
+                    <option value="" disabled selected>Selecione una categoria</option>
+                </select>
+            </div>
+
             <button id="createCategoryBtn">Crear Nueva Categoría</button>
             <!-- Formulario para crear una nueva categoría -->
             <div id="newCategoryForm" style="display: none;">
@@ -41,24 +49,20 @@
                 <input type="text" id="newCategoryName" placeholder="Escribe el nombre de la categoría">
                 <button id="saveCategoryBtn">Guardar Categoría</button>
                 <button id="cancelCategoryBtn">Cancelar</button>
-            </div>
 
-            <button id="eliminarCategoria">Eliminar Categoria</button>
-            <div id="">
+                
+            </div>
+            
+            <button id="eliminarCategoriaBtn">Eliminar Categoria</button>
+            <div id="eliminarCategoriaForm" style="display: none;">
             <label for="categoryToDelete">Selecciona la categoría a eliminar:</label>
             <select id="categoryToDelete" disabled>
                 <option value="" disabled selected>Selecciona una categoría</option>
             </select>
             <button id="deleteCategoryBtn" disabled>Eliminar Categoría</button> <!-- El botón estará deshabilitado hasta que se seleccione una categoría -->
+            <button id="CancelarEliminar">Cancelar</button>
             </div>
 
-
-            <div>
-                <label for="category">Tipo de tarea</label>
-                <select name="category" id="category" required>
-                    <option value="" disabled selected>Seleccione una opción</option>
-                </select>
-            </div>
             <div class="button-div">
                 <button class="save" id="save" type="submit">Guardar Tarea</button>
                 <button class="clear" id="clear" type="reset">Limpiar</button>

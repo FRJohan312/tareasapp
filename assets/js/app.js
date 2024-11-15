@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const newCategoryForm = document.getElementById('newCategoryForm');
     const saveCategoryBtn = document.getElementById('saveCategoryBtn');
     const cancelCategoryBtn = document.getElementById('cancelCategoryBtn');
+    const eliminarCategoriaForm = document.getElementById('eliminarCategoriaForm');
+    const CancelarEliminar = document.getElementById('CancelarEliminar');
+    const eliminarCategoriaBtn = document.getElementById('eliminarCategoriaBtn');
     const deleteCategoryBtn = document.getElementById('deleteCategoryBtn');
     const categoryToDeleteSelect = document.getElementById('categoryToDelete');
     const taskForm = document.getElementById('taskForm');
@@ -147,9 +150,18 @@ document.addEventListener('DOMContentLoaded', () => {
         newCategoryForm.style.display = 'block';
     });
 
+    eliminarCategoriaBtn.addEventListener('click', () => {
+        eliminarCategoriaForm.style.display = 'block';
+    });
+
     cancelCategoryBtn.addEventListener('click', () => {
         newCategoryForm.style.display = 'none';
         document.getElementById('newCategoryName').value = '';
+    });
+
+    CancelarEliminar.addEventListener('click', () => {
+        eliminarCategoriaForm.style.display = 'none';
+        document.getElementById('eliminarCategoria').value = '';
     });
 
     saveCategoryBtn.addEventListener('click', () => {
