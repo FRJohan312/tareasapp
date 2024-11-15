@@ -216,73 +216,9 @@ section h3 {
     background-color: #43a047;
 }
 
-/* Sección de papelera */
-#trash {
-    background-color: #fff4f4;
-    border: 2px dashed #ff4d4d;
-}
-
-#trash h3 {
-    color: #ff4d4d;
-}
-
-/* Transiciones y efectos generales */
-button, .task .buttons button {
-    transition: transform 0.2s ease;
-}
-
-button:hover, .task .buttons button:hover {
-    transform: scale(1.05);
-}
-
-section {
-    transition: transform 0.3s ease-in-out;
-}
-
-section:hover {
-    transform: scale(1.05);
-}
-
-/* Media queries para dispositivos pequeños */
-@media (max-width: 768px) {
-    form, section {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .task {
-        padding: 12px;
-    }
-
-    h1, h2 {
-        font-size: 1.5rem;
-    }
-
-    .task-actions select,
-    .task-actions button {
-        font-size: 0.85rem;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        padding: 15px;
-    }
-
-    form, section {
-        padding: 20px;
-    }
-
-    .button-div {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-/* Botón de crear categoría */
-#createCategoryBtn {
-    background-color: #4CAF50;
+/* Estilos para el botón de papelera */
+#trashButton {
+    background-color: #ff4d4d;
     color: white;
     border: none;
     border-radius: 30px;
@@ -290,46 +226,47 @@ section:hover {
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#createCategoryBtn:hover {
-    background-color: #45a049;
+#trashButton i {
+    font-size: 1.2rem; /* Ajusta el tamaño del icono */
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+}
+
+/* Hover para el botón */
+#trashButton:hover {
+    background-color: #f44336;
     transform: scale(1.1);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Icono de papelera */
-#trashIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    background-color: #ff4d4d;
-    color: white;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#trashIcon:hover {
-    background-color: #f44336;
-}
-
-/* Sección de papelera oculta inicialmente */
-#trash {
+/* Estilos para el contenedor de la papelera */
+#trashContainer {
     background-color: #fff4f4;
     border: 2px dashed #ff4d4d;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+    display: none; /* Asegura que se mantenga oculto hasta ser activado */
 }
 
-#trash.showTrash {
-    display: block;
+#trashContainer.showTrash {
+    display: block; /* Se muestra cuando se activa */
 }
+
+#trashContainer h2 {
+    color: #ff4d4d;
+}
+
+/* Contenedor de las tareas eliminadas */
+#deletedTasksContainer {
+    margin-top: 20px;
+}
+
 
 /* Contenedor principal */
 .mainContainer {
