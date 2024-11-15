@@ -80,22 +80,16 @@ document.getElementById('taskForm').addEventListener('submit', function() {
     };
 
     const singleTask = (task) => `
-        <article id="${task.id}" class="task">
-            <h4>${task.title}</h4>
-            <p>${task.description}</p>
-            <p><strong>Asignado a:</strong> ${task.assigned_to}</p>
-            <p><strong>Fecha:</strong> ${task.endDate}</p>
-            <div class="task-actions">
-                <select name="move" class="move-dropdown">
-                    ${categories.map(cat => `
-                        <option value="${cat}" ${cat === task.category_description ? "selected" : ""}>${cat}</option>
-                    `).join('')}
-                </select>
-                <button name="edit" class="edit">Editar</button>
-                <button name="delete" class="delete">Eliminar</button>
-            </div>
-        </article>
-    `;
+    <article id="${task.id}" class="task">
+        <h4>${task.title}</h4>
+        <div class="task-actions">
+            <button name="preview" class="preview">Vista previa</button>
+            <button name="edit" class="edit">Editar</button>
+            <button name="delete" class="delete">Eliminar</button>
+        </div>
+    </article>
+`;
+
 
     const getCategoryBlock = (categoryName) => {
         let categoryBlock = document.querySelector(`.category-block[data-category="${categoryName}"]`);
@@ -150,6 +144,30 @@ document.getElementById('taskForm').addEventListener('submit', function() {
             alert("La categoría no existe o no fue seleccionada.");
         }
     });
+    // VISTA PREVIA
+    document.addEventListener('click', (event) => {
+        if (event.target.name === 'preview') {
+            const taskElement = event.target.closest('article');
+            const taskId = taskElement?.id;
+            const task = taskList.find(t => t.id === taskId);
+    
+            if (task) {
+                document.getElementById('previewTitle').textContent = task.title;
+                document.getElementById('previewDescription').innerHTML = task.description;
+                document.getElementById('previewAssignedTo').textContent = task.assigned_to;
+                document.getElementById('previewEndDate').textContent = task.endDate;
+                document.getElementById('previewCategory').textContent = task.category_description;
+    
+                document.getElementById('previewModal').style.display = 'block';
+            }
+        }
+    });
+    
+    // Cerrar el modal al hacer clic en el botón de cerrar
+    document.getElementById('closePreview').addEventListener('click', () => {
+        document.getElementById('previewModal').style.display = 'none';
+    });
+    
 
     createCategoryBtn.addEventListener('click', () => {
         newCategoryForm.style.display = 'block';

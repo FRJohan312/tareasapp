@@ -38,7 +38,19 @@
                 <label for="datetime">Fecha final</label>
                 <input name="datetime" id="endDate" type="datetime-local" />
             </div>
-
+            
+            <!-- VISTA PREVIA -->
+            <div id="previewModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span id="closePreview" class="close">&times;</span>
+                    <h4 id="previewTitle"></h4>
+                    <p id="previewDescription"></p>
+                    <p><strong>Asignado a:</strong> <span id="previewAssignedTo"></span></p>
+                    <p><strong>Fecha:</strong> <span id="previewEndDate"></span></p>
+                    <p><strong>Categoría:</strong> <span id="previewCategory"></span></p>
+                </div>
+            </div>
+            
             <div>
                 <label for="category">Categoria</label>
                 <select name="category" id="category" required>
