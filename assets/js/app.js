@@ -166,6 +166,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+        // Limitar el campo de descripción a 100 caracteres en el archivo app.js
+    const descriptionField = document.getElementById('description');
+
+    descriptionField.addEventListener('input', () => {
+        if (descriptionField.value.length > 100) {
+            descriptionField.value = descriptionField.value.slice(0, 100);
+            alert('La descripción no puede exceder los 100 caracteres.');
+        }
+    });
+
     const addCategoryToUI = (categoryName) => {
         const newOption = document.createElement('option');
         newOption.value = categoryName;
