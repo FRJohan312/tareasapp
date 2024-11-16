@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     formularioTareas.addEventListener('submit', event => {
-        event.preventDefault();
+        // event.preventDefault();
         const tarea = {
             id: editandotareaId || Math.random().toString(16).slice(2),
             title: formularioTareas.title.value,
