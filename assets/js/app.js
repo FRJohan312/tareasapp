@@ -14,16 +14,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const botonPapelera = document.getElementById('botonPapelera');
     const contenedorPapelera = document.getElementById('contenedorPapelera');
     const contenedorTareasEliminadas = document.getElementById('contenedorTareasEliminadas');
-    
+
     let listaTareas = JSON.parse(localStorage.getItem('listaTareas')) || [];
     let categorias = JSON.parse(localStorage.getItem('categorias')) || [];
     let editandotareaId = null;
 
-// Sincronizar el contenido de Quill con el textarea antes de enviar el formulario
-document.getElementById('formularioTareas').addEventListener('submit', function() {
-    document.getElementById('description').value = quill.root.innerHTML;
-});
+    // Configurar fecha mínima en el campo de "Fecha final"
+    const fechaFinInput = document.getElementById("fechaFin");
 
+    const setMinDateForFechaFin = () => {
+        const ahora = new Date();
+        const fechaMinima = ahora.toISOString().slice(0, 16); // Formato 'YYYY-MM-DDTHH:mm'
+        fechaFinInput.setAttribute("min", fechaMinima);
+    };
+
+    // Establecer la fecha mínima al cargar la página
+    setMinDateForFechaFin();
+
+    // Reestablecer la fecha mínima al reiniciar el formulario
+    formularioTareas.addEventListener('reset', () => {
+        setMinDateForFechaFin();
+    });
+
+    // Sincronizar el contenido de Quill con el textarea antes de enviar el formulario
+    document.getElementById('formularioTareas').addEventListener('submit', function() {
+        document.getElementById('description').value = quill.root.innerHTML;
+    });
 
     // Mostrar/Ocultar Papelera
     botonPapelera.addEventListener('click', () => {
@@ -88,8 +104,7 @@ document.getElementById('formularioTareas').addEventListener('submit', function(
             <button name="delete" class="delete">Eliminar</button>
         </div>
     </article>
-`;
-
+    `;
 
     const obtenerblockCategoria = (categoriaName) => {
         let blockCategoria = document.querySelector(`.categoria-block[data-categoria="${categoriaName}"]`);
@@ -361,5 +376,4 @@ document.getElementById('formularioTareas').addEventListener('submit', function(
 
     loadcategorias();
     printFromLocalStorage();
-    
 });
